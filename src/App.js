@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {observer} from 'mobx-react';
+
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      itemsMenu: []
+    }
+
+    window.menuComponent = this;
+  }
+
+  sendMenuSupermarket(name){
+    const items = [...this.state.itemsMenu];
+    items.push(name);
+    this.setState({itemsMenu: items});
+    console.log("object");
+  }
+
+  render(){
+    const {itemsMenu} = this.state;
+
+    return (
+      <div className="App">
+        <header className="App-header">
+          {itemsMenu && itemsMenu.map(item => (<p>{item}</p>))}
+        </header>
+      </div>
+    );
+  }
 }
 
-export default App;
+export default observer(App);
